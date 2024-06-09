@@ -1,3 +1,4 @@
+
 const express = require('express');
 let books = require("./booksdb.js");
 let isValid = require("./auth_users.js").isValid;
@@ -32,8 +33,7 @@ public_users.get('/isbn/:isbn',function (req, res) {
   const isbn = req.params.isbn;
 
   if (isbn !== undefined) {
-    const isbn = req.params.title;
-    const booksByIsbn = Object.values(books).filter(book => book.author === isbn);
+    const booksByIsbn = Object.values(books).filter(book => book.isbn === isbn);
   
     if (booksByIsbn.length > 0) {
       res.status(200).json(booksByIsbn);
@@ -59,8 +59,8 @@ public_users.get('/author/:author',function (req, res) {
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
-  const author = req.params.title;
-  const booksByTitle = Object.values(books).filter(book => book.author === title);
+  const title = req.params.title;
+  const booksByTitle = Object.values(books).filter(book => book.title === title);
 
   if (booksByTitle.length > 0) {
     res.status(200).json(booksByTitle);
@@ -73,13 +73,13 @@ public_users.get('/title/:title',function (req, res) {
 
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
-  const isbn = req.params.isbn;
-  const booksByIsbn = Object.values(books).filter(book => book.author === title);
+  const title = req.params.title;
+  const booksByIsbn = Object.values(books).filter(book => book.title === title);
 
   if (booksByIsbn.length > 0) {
-    res.status(200).json(booksByTitle.reviews);
+    res.status(200).json(booksByTitle.review);
   } else {
-    res.status(404).json({ error: 'isbn not found' });
+    res.status(404).json({ error: 'title not found' });
   }
 });
 
